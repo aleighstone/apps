@@ -1,303 +1,244 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe coding deer in the forest</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #081c15;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+        h1 {
+            color: #d8f3dc;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 32px;
+            text-shadow: 3px 3px 0px #1b4332;
+        }
+        #game-container {
+            position: relative;
+            border: 10px solid #2d6a4f;
+     2      border-radius: 5px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        canvas {
+            background-color: #1b4332;
+            display: block;
+        }
+        #ui {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #d8f3dc;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+       2    display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            background-color: #ffffff;
+            border: 4px solid #95d5b2;
+            cursor: pointer;
+            color: #1b4332;
+            font-weight: bold;
+            font-family: inherit;
+        }
+        button:hover {
+            background-color: #95d5b2;
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Vibe coding deer in the forest&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100vh;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #081c15; /* Darker, mysterious forest green */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Courier New', Courier, monospace; /* More "vibey" font */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #d8f3dc;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>letter-spacing: 3px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 3px 3px 0px #1b4332;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#game-container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 10px solid #2d6a4f;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 50px rgba(0,0,0,0.5);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>canvas {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #1b4332; /* Deep forest floor */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#ui {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>left: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #d8f3dc;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>pointer-events: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>#overlay {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0, 0, 0, 0.9);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>button {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #ffffff;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 4px solid #95d5b2;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #1b4332;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: inherit;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>button:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #95d5b2;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;h1&gt;Vibe coding deer in the forest&lt;/h1&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div id="game-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="ui"&gt;Berries: &lt;span id="score"&gt;0&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;canvas id="gameCanvas" width="800" height="400"&gt;&lt;/canvas&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="overlay"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1 style="color: #ff4d6d;"&gt;GAME OVER&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="final-score" style="font-size: 24px; margin-bottom: 30px;"&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="resetGame()"&gt;RESTART&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const canvas = document.getElementById('gameCanvas');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const ctx = canvas.getContext('2d');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const scoreElement = document.getElementById('score');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const overlay = document.getElementById('overlay');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const finalScoreText = document.getElementById('final-score');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let score = 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let gameActive = true;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let frames = 0;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const player = {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>x: 80,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>y: 200,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>w: 60,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>h: 70,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>speed: 7</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let enemies = [];<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let collectibles = [];<span class="Apple-converted-space"> </span></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const keys = {};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.addEventListener('keydown', e =&gt; keys[e.code] = true);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.addEventListener('keyup', e =&gt; keys[e.code] = false);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function spawnItems() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (frames % 90 === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>enemies.push({</p>
-<p class="p1"><span class="Apple-converted-space">                </span>x: canvas.width,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>y: Math.random() * (canvas.height - 50),</p>
-<p class="p1"><span class="Apple-converted-space">                </span>w: 90,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>h: 50,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>speed: 5 + (score / 5)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (frames % 60 === 0) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>collectibles.push({</p>
-<p class="p1"><span class="Apple-converted-space">                </span>x: canvas.width,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>y: Math.random() * (canvas.height - 30),</p>
-<p class="p1"><span class="Apple-converted-space">                </span>w: 25,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>h: 25</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function draw99NightsDeer(x, y) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// LEG STYLE (Blocky Roblox style)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#4e342e'; // Dark brown legs</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 10, y + 50, 8, 20);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 35, y + 50, 8, 20);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// MAIN BODY (Rectangle)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#6b4226'; // Saddle brown</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 5, y + 20, 45, 35);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// WHITE SPOTS</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 15, y + 25, 4, 4);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 30, y + 30, 4, 4);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 22, y + 38, 4, 4);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// NECK</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#6b4226';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 35, y + 5, 12, 18);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// HEAD</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 32, y - 8, 25, 18);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// FACE (Tan muzzle area like the Roblox deer)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#d2b48c';<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 45, y - 5, 14, 12);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// EYES (Large, dark, staring)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = 'black';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.arc(x + 50, y - 1, 3.5, 0, Math.PI * 2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// ANTLERS (Small dark branches)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#3a261a';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 38, y - 18, 3, 10);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 48, y - 18, 3, 10);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 35, y - 18, 15, 3);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function drawBerry(x, y) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#ff4d6d';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.arc(x + 12, y + 12, 10, 0, Math.PI * 2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#2d6a4f';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillRect(x + 10, y, 4, 6);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function drawFlyingShark(x, y, w, h) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#457b9d';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.ellipse(x + w/2, y + h/2, w/2, h/2, 0, 0, Math.PI * 2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Fin</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.moveTo(x + w/2, y);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(x + w/2 - 15, y - 20);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(x + w/2 - 30, y);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Tail</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.moveTo(x + w, y + h/2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(x + w + 15, y);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.lineTo(x + w + 15, y + h);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Red glowing eye</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = 'red';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.beginPath();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.arc(x + 15, y + 15, 4, 0, Math.PI * 2);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fill();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function update() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (!gameActive) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (keys['ArrowUp'] &amp;&amp; player.y &gt; 20) player.y -= player.speed;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (keys['ArrowDown'] &amp;&amp; player.y &lt; canvas.height - player.h) player.y += player.speed;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (keys['ArrowLeft'] &amp;&amp; player.x &gt; 0) player.x -= player.speed;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (keys['ArrowRight'] &amp;&amp; player.x &lt; canvas.width - player.w) player.x += player.speed;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>enemies.forEach((shark, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>shark.x -= shark.speed;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (player.x &lt; shark.x + shark.w &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.x + player.w &gt; shark.x &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.y &lt; shark.y + shark.h &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.y + player.h &gt; shark.y) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gameOver();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (shark.x + shark.w &lt; 0) enemies.splice(index, 1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>collectibles.forEach((berry, index) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>berry.x -= 3;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (player.x &lt; berry.x + berry.w &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.x + player.w &gt; berry.x &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.y &lt; berry.y + berry.h &amp;&amp;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>player.y + player.h &gt; berry.y) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>score++;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>scoreElement.innerText = score;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>collectibles.splice(index, 1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (berry.x + berry.w &lt; 0) collectibles.splice(index, 1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>frames++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>spawnItems();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function draw() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.clearRect(0, 0, canvas.width, canvas.height);</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Dark forest background details</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ctx.fillStyle = '#081c15';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>for(let i=0; i&lt;10; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let treeX = ((i * 150) - (frames % 150));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>ctx.fillRect(treeX, 0, 40, 400);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>draw99NightsDeer(player.x, player.y);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>enemies.forEach(s =&gt; drawFlyingShark(s.x, s.y, s.w, s.h));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>collectibles.forEach(b =&gt; drawBerry(b.x, b.y));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function gameLoop() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>update();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>draw();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (gameActive) requestAnimationFrame(gameLoop);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function gameOver() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gameActive = false;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>overlay.style.display = 'flex';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>finalScoreText.innerText = `The deer collected ${score} berries.`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function resetGame() {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>score = 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scoreElement.innerText = score;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>enemies = [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>collectibles = [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>player.y = 200;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gameActive = true;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>overlay.style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>gameLoop();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>gameLoop();</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<h1>Vibe coding deer in the forest</h1>
+<div id="game-container">
+    <div id="ui">Berries: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="overlay">
+        <h1 style="color: #ff4d6d;">GAME OVER</h1>
+        <p id="final-score" style="font-size: 24px; margin-bottom: 30px;"></p>
+        <button onclick="resetGame()">RESTART</button>
+    </div>
+</div>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('score');
+    const overlay = document.getElementById('overlay');
+    const finalScoreText = document.getElementById('final-score');
+    let score = 0;
+    let gameActive = true;
+    let frames = 0;
+    const player = {
+        x: 80,
+        y: 200,
+        w: 60,
+        h: 70,
+        speed: 7
+    };
+    let enemies = [];
+    let collectibles = [];
+    const keys = {};
+    window.addEventListener('keydown', e => keys[e.code] = true);
+    window.addEventListener('keyup', e => keys[e.code] = false);
+    function spawnItems() {
+        if (frames % 90 === 0) {
+            enemies.push({
+                x: canvas.width,
+                y: Math.random() * (canvas.height - 50),
+                w: 90,
+                h: 50,
+                speed: 5 + (score / 5)
+            });
+        }
+        if (frames % 60 === 0) {
+            collectibles.push({
+                x: canvas.width,
+                y: Math.random() * (canvas.height - 30),
+                w: 25,
+                h: 25
+            });
+        }
+    }
+    function draw99NightsDeer(x, y) {
+        ctx.fillStyle = '#4e342e';
+        ctx.fillRect(x + 10, y + 50, 8, 20);
+        ctx.fillRect(x + 35, y + 50, 8, 20);
+        ctx.fillStyle = '#6b4226';
+        ctx.fillRect(x + 5, y + 20, 45, 35);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fillRect(x + 15, y + 25, 4, 4);
+        ctx.fillRect(x + 30, y + 30, 4, 4);
+        ctx.fillRect(x + 22, y + 38, 4, 4);
+        ctx.fillStyle = '#6b4226';
+        ctx.fillRect(x + 35, y + 5, 12, 18);
+        ctx.fillRect(x + 32, y - 8, 25, 18);
+        ctx.fillStyle = '#d2b48c';
+        ctx.fillRect(x + 45, y - 5, 14, 12);
+        ctx.fillStyle = 'black';
+        ctx.beginPath();
+        ctx.arc(x + 50, y - 1, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#3a261a';
+        ctx.fillRect(x + 38, y - 18, 3, 10);
+        ctx.fillRect(x + 48, y - 18, 3, 10);
+        ctx.fillRect(x + 35, y - 18, 15, 3);
+    }
+    function drawBerry(x, y) {
+        ctx.fillStyle = '#ff4d6d';
+        ctx.beginPath();
+        ctx.arc(x + 12, y + 12, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#2d6a4f';
+        ctx.fillRect(x + 10, y, 4, 6);
+    }
+    function drawFlyingShark(x, y, w, h) {
+        ctx.fillStyle = '#457b9d';
+        ctx.beginPath();
+        ctx.ellipse(x + w/2, y + h/2, w/2, h/2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x + w/2, y);
+        ctx.lineTo(x + w/2 - 15, y - 20);
+        ctx.lineTo(x + w/2 - 30, y);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x + w, y + h/2);
+        ctx.lineTo(x + w + 15, y);
+        ctx.lineTo(x + w + 15, y + h);
+        ctx.fill();
+        ctx.fillStyle = 'red';
+     2  ctx.beginPath();
+        ctx.arc(x + 15, y + 15, 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    function update() {
+        if (!gameActive) return;
+        if (keys['ArrowUp'] && player.y > 20) player.y -= player.speed;
+        if (keys['ArrowDown'] && player.y < canvas.height - player.h) player.y += player.speed;
+        if (keys['ArrowLeft'] && player.x > 0) player.x -= player.speed;
+        if (keys['ArrowRight'] && player.x < canvas.width - player.w) player.x += player.speed;
+        enemies.forEach((shark, index) => {
+            shark.x -= shark.speed;
+            if (player.x < shark.x + shark.w &&
+                player.x + player.w > shark.x &&
+                player.y < shark.y + shark.h &&
+                player.y + player.h > shark.y) {
+                gameOver();
+            }
+            if (shark.x + shark.w < 0) enemies.splice(index, 1);
+        });
+        collectibles.forEach((berry, index) => {
+            berry.x -= 3;
+            if (player.x < berry.x + berry.w &&
+                player.x + player.w > berry.x &&
+                player.y < berry.y + berry.h &&
+                player.y + player.h > berry.y) {
+                score++;
+                scoreElement.innerText = score;
+                collectibles.splice(index, 1);
+            }
+            if (berry.x + berry.w < 0) collectibles.splice(index, 1);
+        });
+        frames++;
+        spawnItems();
+    }
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    2   ctx.fillStyle = '#081c15';
+        for (let i = 0; i < 10; i++) {
+            let treeX = ((i * 150) - (frames % 150));
+            ctx.fillRect(treeX, 0, 40, 400);
+        }
+        draw99NightsDeer(player.x, player.y);
+        enemies.forEach(s => drawFlyingShark(s.x, s.y, s.w, s.h));
+        collectibles.forEach(b => drawBerry(b.x, b.y));
+    }
+    function gameLoop() {
+        update();
+        draw();
+        if (gameActive) requestAnimationFrame(gameLoop);
+    }
+    function gameOver() {
+        gameActive = false;
+        overlay.style.display = 'flex';
+        finalScoreText.innerText = `The deer collected ${score} berries.`;
+    }
+    function resetGame() {
+        score = 0;
+        scoreElement.innerText = score;
+        enemies = [];
+        collectibles = [];
+        player.y = 200;
+        gameActive = true;
+        overlay.style.display = 'none';
+        gameLoop();
+  2 }
+    gameLoop();
+</script>
 </body>
 </html>
